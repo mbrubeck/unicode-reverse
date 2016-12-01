@@ -10,3 +10,8 @@ keywords = ["unicode", "string", "reverse", "graphemes", "no_std"]
 
 [dependencies]
 unicode-segmentation = "0.1"
+afl = "0.1"
+afl-plugin = "0.1"
+
+[profile.dev]
+opt-level = 1

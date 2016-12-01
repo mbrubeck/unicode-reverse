@@ -1,5 +1,8 @@
 #![no_std]
 
+#![feature(plugin)]
+#![plugin(afl_plugin)]
+
 //! The [`reverse_grapheme_clusters_in_place`][0] function reverses a string slice in-place without
 //! allocating any memory on the heap.  It correctly handles multi-byte UTF-8 sequences and
 //! grapheme clusters, including combining marks and astral characters such as Emoji.
@@ -65,6 +68,7 @@
 //! [2]: http://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries
 //! [3]: https://doc.rust-lang.org/book/no-stdlib.html
 
+extern crate afl;
 extern crate unicode_segmentation;
 
 use core::slice;
