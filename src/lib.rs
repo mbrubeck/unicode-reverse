@@ -145,6 +145,11 @@ mod tests {
     }
 
     #[test]
+    fn test_empty() {
+        test_rev("", "");
+    }
+
+    #[test]
     fn test_ascii() {
         test_rev("Hello", "olleH");
     }
