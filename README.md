@@ -51,7 +51,7 @@ fn main() {
 The `reverse_grapheme_clusters_in_place` function from this crate performs this same operation,
 but performs the reversal in-place rather than allocating a new string.
 
-# Algorithm
+## Algorithm
 
 The implementation is very simple. It makes two passes over the string's contents:
 
@@ -61,7 +61,7 @@ The implementation is very simple. It makes two passes over the string's content
 After the second pass, each grapheme cluster has been reversed twice, so its bytes are now back
 in their original order, but the clusters are now in the opposite order within the string.
 
-# no_std
+## no_std
 
 This crate does not depend on libstd, so it can be used in [`no_std` projects][3].
 
