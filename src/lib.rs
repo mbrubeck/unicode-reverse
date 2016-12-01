@@ -1,8 +1,10 @@
+#![no_std]
+
 extern crate unicode_segmentation;
 
+use core::slice;
+use core::str;
 use unicode_segmentation::UnicodeSegmentation;
-use std::slice;
-use std::str;
 
 pub fn reverse_grapheme_clusters_in_place(s: &mut str) {
     // Part 1: Reverse the bytes within each grapheme cluster.
@@ -45,6 +47,9 @@ pub fn reverse_grapheme_clusters_in_place(s: &mut str) {
 #[cfg(test)]
 mod tests {
     use super::reverse_grapheme_clusters_in_place;
+
+    extern crate std;
+    use self::std::string::ToString;
 
     fn test_rev(a: &str, b: &str) {
         let mut a = a.to_string();
