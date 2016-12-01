@@ -41,11 +41,11 @@ Reversing the [grapheme clusters][2] of the string fixes this problem:
 extern crate unicode_segmentation;
 use unicode_segmentation::UnicodeSegmentation;
 
-# fn main() {
-let x = "man\u{0303}ana";
-let y: String = x.graphemes(true).rev().collect();
-println!("{}", y); // prints "anañam"
-# }
+fn main() {
+    let x = "man\u{0303}ana";
+    let y: String = x.graphemes(true).rev().collect();
+    println!("{}", y); // prints "anañam"
+}
 ```
 
 The `reverse_grapheme_clusters_in_place` function from this crate performs this same operation,
