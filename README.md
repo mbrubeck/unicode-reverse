@@ -65,7 +65,7 @@ in their original order, but the clusters are now in the opposite order within t
 
 This crate does not depend on libstd, so it can be used in [`no_std` projects][3].
 
-[0]: https://docs.rs/unicode-reverse/*/fn.reverse_grapheme_clusters_in_place.html
+[0]: https://docs.rs/unicode-reverse/*/unicode_reverse/fn.reverse_grapheme_clusters_in_place.html
 [1]: https://mathiasbynens.be/notes/javascript-unicode
 [2]: http://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries
 [3]: https://doc.rust-lang.org/book/no-stdlib.html
