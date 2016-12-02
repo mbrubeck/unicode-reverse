@@ -10,3 +10,6 @@ keywords = ["unicode", "string", "reverse", "graphemes", "no_std"]
 
 [dependencies]
 unicode-segmentation = "0.1"
+
+[dev-dependencies]
+quickcheck = "0.4"
