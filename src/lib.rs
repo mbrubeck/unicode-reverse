@@ -65,6 +65,10 @@
 //! [2]: http://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries
 //! [3]: https://doc.rust-lang.org/book/no-stdlib.html
 
+#[cfg(test)]
+#[macro_use]
+extern crate quickcheck;
+
 extern crate unicode_segmentation;
 
 use core::slice;
@@ -134,8 +138,10 @@ pub fn reverse_grapheme_clusters_in_place(s: &mut str) {
 #[cfg(test)]
 mod tests {
     use super::reverse_grapheme_clusters_in_place;
+    use unicode_segmentation::UnicodeSegmentation;
 
     extern crate std;
+    use self::std::string::String;
     use self::std::string::ToString;
 
     fn test_rev(a: &str, b: &str) {
@@ -167,5 +173,14 @@ mod tests {
     #[test]
     fn test_combining_mark() {
         test_rev("man\u{0303}ana", "anan\u{0303}am");
+    }
+
+    quickcheck! {
+        fn quickcheck(s: String) -> bool {
+            let mut in_place = s.clone();
+            reverse_grapheme_clusters_in_place(&mut in_place);
+            let normal = s.graphemes(true).rev().collect::<String>();
+            in_place == normal
+        }
     }
 }
