@@ -46,6 +46,10 @@
 //! The `reverse_grapheme_clusters_in_place` function from this crate performs this same operation,
 //! but performs the reversal in-place rather than allocating a new string.
 //!
+//! Note: Even grapheme-level reversal may produce unexpected output if the input string contains
+//! certain non-printable control codes, such as directional formatting characters. Handling such
+//! characters is outside the scope of this crate.
+//!
 //! ## Algorithm
 //!
 //! The implementation is very simple. It makes two passes over the string's contents:
