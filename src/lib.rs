@@ -117,26 +117,27 @@ pub fn reverse_grapheme_clusters_in_place(s: &mut str) {
             tail = new_tail;
 
             // Reverse the bytes within this grapheme cluster.
-            let bytes = unsafe {
-                let head = head;
-                // This is safe because `head` is &mut str so guaranteed not to be aliased.
-                slice::from_raw_parts_mut(head.as_ptr() as *mut u8, head.len())
-            };
-            bytes.reverse();
+            unsafe {
+                mut_bytes(head).reverse();
+            }
         }
     }
 
     // Part 2: Reverse all the bytes.
     // This un-reverses all of the reversals from Part 1.
-    let bytes = unsafe {
-        let s = s;
-        // This is safe because `s` is &mut str so guaranteed not to be aliased.
-        slice::from_raw_parts_mut(s.as_ptr() as *mut u8, s.len())
-    };
-    bytes.reverse();
+    unsafe {
+        mut_bytes(s).reverse();
+    }
 
     // Each UTF-8 sequence is now in the right order.
-    debug_assert!(str::from_utf8(bytes).is_ok());
+    debug_assert!(str::from_utf8(s.as_bytes()).is_ok());
+}
+
+/// Convert a mutable string slice to a mutable `[u8]` slice.
+///
+/// This is unsafe if the original `str` becomes accessible while the bytes are not valid UTF-8.
+unsafe fn mut_bytes(s: &mut str) -> &mut [u8] {
+    slice::from_raw_parts_mut(s.as_ptr() as *mut u8, s.len())
 }
 
 #[cfg(test)]
