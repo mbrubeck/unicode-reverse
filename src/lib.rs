@@ -49,6 +49,10 @@
 //! The `reverse_grapheme_clusters_in_place` function from this crate performs this same operation,
 //! but performs the reversal in-place rather than allocating a new string.
 //!
+//! Note: Even grapheme-level reversal may produce unexpected output if the input string contains
+//! certain non-printable control codes, such as directional formatting characters. Handling such
+//! characters is outside the scope of this crate.
+//!
 //! ## Algorithm
 //!
 //! The implementation is very simple. It makes two passes over the string's contents:
@@ -69,6 +73,11 @@
 //! [3]: https://doc.rust-lang.org/book/no-stdlib.html
 
 extern crate afl;
+
+#[cfg(test)]
+#[macro_use]
+extern crate quickcheck;
+
 extern crate unicode_segmentation;
 
 use core::slice;
@@ -113,33 +122,36 @@ pub fn reverse_grapheme_clusters_in_place(s: &mut str) {
             tail = new_tail;
 
             // Reverse the bytes within this grapheme cluster.
-            let bytes = unsafe {
-                let head = head;
-                // This is safe because `head` is &mut str so guaranteed not to be aliased.
-                slice::from_raw_parts_mut(head.as_ptr() as *mut u8, head.len())
-            };
-            bytes.reverse();
+            unsafe {
+                mut_bytes(head).reverse();
+            }
         }
     }
 
     // Part 2: Reverse all the bytes.
     // This un-reverses all of the reversals from Part 1.
-    let bytes = unsafe {
-        let s = s;
-        // This is safe because `s` is &mut str so guaranteed not to be aliased.
-        slice::from_raw_parts_mut(s.as_ptr() as *mut u8, s.len())
-    };
-    bytes.reverse();
+    unsafe {
+        mut_bytes(s).reverse();
+    }
 
     // Each UTF-8 sequence is now in the right order.
-    debug_assert!(str::from_utf8(bytes).is_ok());
+    debug_assert!(str::from_utf8(s.as_bytes()).is_ok());
+}
+
+/// Convert a mutable string slice to a mutable `[u8]` slice.
+///
+/// This is unsafe if the original `str` becomes accessible while the bytes are not valid UTF-8.
+unsafe fn mut_bytes(s: &mut str) -> &mut [u8] {
+    slice::from_raw_parts_mut(s.as_ptr() as *mut u8, s.len())
 }
 
 #[cfg(test)]
 mod tests {
     use super::reverse_grapheme_clusters_in_place;
+    use unicode_segmentation::UnicodeSegmentation;
 
     extern crate std;
+    use self::std::string::String;
     use self::std::string::ToString;
 
     fn test_rev(a: &str, b: &str) {
@@ -171,5 +183,14 @@ mod tests {
     #[test]
     fn test_combining_mark() {
         test_rev("man\u{0303}ana", "anan\u{0303}am");
+    }
+
+    quickcheck! {
+        fn quickcheck(s: String) -> bool {
+            let mut in_place = s.clone();
+            reverse_grapheme_clusters_in_place(&mut in_place);
+            let normal = s.graphemes(true).rev().collect::<String>();
+            in_place == normal
+        }
     }
 }
