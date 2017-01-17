@@ -107,18 +107,11 @@ pub fn reverse_grapheme_clusters_in_place(s: &mut str) {
     // undone before the data is accessed as `str` again.
     {
         let mut tail = &mut s[..];
-        loop {
-            // Advance to the next grapheme cluster:
-            let len = match tail.graphemes(true).next() {
-                Some(grapheme) => grapheme.len(),
-                None => break
-            };
-            let (head, new_tail) = {tail}.split_at_mut(len);
+        while let Some(len) = tail.graphemes(true).next().map(str::len) {
+            let (grapheme, new_tail) = {tail}.split_at_mut(len);
             tail = new_tail;
-
-            // Reverse the bytes within this grapheme cluster.
             unsafe {
-                mut_bytes(head).reverse();
+                mut_bytes(grapheme).reverse();
             }
         }
     }
