@@ -1,3 +1,7 @@
+== 1.0.4 ==
+
+* Minor refactoring to make code simpler
+
 == 1.0.3 ==
 
 * Update to unicode-segmentation 1.0.
