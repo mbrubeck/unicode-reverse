@@ -7,6 +7,7 @@ description = "Unicode-aware in-place string reversal"
 repository = "https://github.com/mbrubeck/unicode-reverse"
 documentation = "https://docs.rs/unicode-reverse"
 keywords = ["unicode", "string", "reverse", "graphemes", "no_std"]
+readme = "README.md"
 
 [dependencies]
 unicode-segmentation = "1.0"
