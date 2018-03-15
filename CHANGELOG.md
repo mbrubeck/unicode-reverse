@@ -1,19 +1,27 @@
-== 1.0.4 ==
+# 1.0.6
+
+* Replace an internal unsafe function with `str::as_mut_bytes`
+
+# 1.0.5
+
+* Link to README from Cargo manifest
+
+# 1.0.4
 
 * Minor refactoring to make code simpler
 
-== 1.0.3 ==
+# 1.0.3
 
 * Update to unicode-segmentation 1.0.
 
-== 1.0.2 ==
+# 1.0.2
 
 * Minor refactoring to make unsafe code more readable
 
-== 1.0.1 ==
+# 1.0.1
 
 * Improved documentation
 
-== 1.0.0 ==
+# 1.0.0
 
 * Initial release

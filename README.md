@@ -4,6 +4,7 @@ Unicode-aware in-place string reversal for Rust UTF-8 strings.
 
 * [Documentation](https://docs.rs/unicode-reverse)
 * [crates.io](https://crates.io/crates/unicode-reverse)
+* [Release notes](https://github.com/mbrubeck/unicode-reverse/blob/master/CHANGELOG.md)
 
 The [`reverse_grapheme_clusters_in_place`][0] function reverses a string slice in-place without
 allocating any memory on the heap.  It correctly handles multi-byte UTF-8 sequences and
