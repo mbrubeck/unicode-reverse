@@ -1,3 +1,7 @@
+# 1.0.7
+
+* Refactoring to make safety invariants clearer.
+
 # 1.0.6
 
 * Replace an internal unsafe function with `str::as_mut_bytes`

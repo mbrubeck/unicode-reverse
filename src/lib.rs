@@ -103,26 +103,25 @@ use unicode_segmentation::UnicodeSegmentation;
 /// }
 /// ```
 pub fn reverse_grapheme_clusters_in_place(s: &mut str) {
-    // Part 1: Reverse the bytes within each grapheme cluster.
-    // This does not preserve UTF-8 validity. We must guarantee this `reverse` is
-    // undone before the data is accessed as `str` again.
-    {
-        let mut tail = &mut s[..];
-        while let Some(len) = tail.graphemes(true).next().map(str::len) {
-            let (grapheme, new_tail) = {tail}.split_at_mut(len);
-            tail = new_tail;
-            unsafe {
-                grapheme.as_bytes_mut().reverse();
+    unsafe {
+        let v = s.as_bytes_mut();
+
+        // Part 1: Reverse the bytes within each grapheme cluster.
+        // This does not preserve UTF-8 validity.
+        {
+            // Invariant: `tail` points to data we have not modified yet, so it is always valid UTF-8.
+            let mut tail = &mut v[..];
+            while let Some(len) = str::from_utf8_unchecked(tail).graphemes(true).next().map(str::len) {
+                let (grapheme, new_tail) = {tail}.split_at_mut(len);
+                grapheme.reverse();
+                tail = new_tail;
             }
         }
-    }
 
-    // Part 2: Reverse all the bytes.
-    // This un-reverses all of the reversals from Part 1.
-    unsafe {
-        s.as_bytes_mut().reverse();
-    }
+        // Part 2: Reverse all bytes. This restores multi-byte sequences to their original order.
+        v.reverse();
 
-    // Each UTF-8 sequence is now in the right order.
-    debug_assert!(str::from_utf8(s.as_bytes()).is_ok());
+        // The string is now valid UTF-8 again.
+        debug_assert!(str::from_utf8(v).is_ok());
+    }
 }

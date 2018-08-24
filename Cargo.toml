@@ -1,6 +1,6 @@
 [package]
 name = "unicode-reverse"
-version = "1.0.6"
+version = "1.0.7"
 authors = ["Matt Brubeck <mbrubeck@limpet.net>"]
 license = "MIT / Apache-2.0"
 description = "Unicode-aware in-place string reversal"
