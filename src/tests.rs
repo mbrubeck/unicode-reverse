@@ -1,3 +1,4 @@
+use quickcheck::quickcheck;
 use super::reverse_grapheme_clusters_in_place;
 use unicode_segmentation::UnicodeSegmentation;
 
@@ -37,7 +38,7 @@ fn test_combining_mark() {
 }
 
 quickcheck! {
-    fn quickcheck(s: String) -> bool {
+    fn quickchecks(s: String) -> bool {
         let mut in_place = s.clone();
         reverse_grapheme_clusters_in_place(&mut in_place);
         let normal = s.graphemes(true).rev().collect::<String>();

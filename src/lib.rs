@@ -70,11 +70,6 @@
 //! [3]: https://doc.rust-lang.org/book/no-stdlib.html
 
 #[cfg(test)]
-#[macro_use]
-extern crate quickcheck;
-extern crate unicode_segmentation;
-
-#[cfg(test)]
 mod tests;
 
 use core::str;
@@ -112,7 +107,7 @@ pub fn reverse_grapheme_clusters_in_place(s: &mut str) {
             // Invariant: `tail` points to data we have not modified yet, so it is always valid UTF-8.
             let mut tail = &mut v[..];
             while let Some(len) = str::from_utf8_unchecked(tail).graphemes(true).next().map(str::len) {
-                let (grapheme, new_tail) = {tail}.split_at_mut(len);
+                let (grapheme, new_tail) = tail.split_at_mut(len);
                 grapheme.reverse();
                 tail = new_tail;
             }

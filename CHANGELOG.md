@@ -1,3 +1,7 @@
+# 1.0.8
+
+* Update to Rust 2018 edition.
+
 # 1.0.7
 
 * Refactoring to make safety invariants clearer.
