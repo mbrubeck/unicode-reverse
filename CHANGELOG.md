@@ -1,3 +1,8 @@
+# 1.0.9
+
+* Update Cargo metadata.
+* Update to Rust 2021 edition.
+
 # 1.0.8
 
 * Update to Rust 2018 edition.
