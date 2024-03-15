@@ -1,14 +1,14 @@
 [package]
 name = "unicode-reverse"
-version = "1.0.8"
+version = "1.0.9"
 authors = ["Matt Brubeck <mbrubeck@limpet.net>"]
-license = "MIT / Apache-2.0"
+license = "MIT OR Apache-2.0"
 description = "Unicode-aware in-place string reversal"
 repository = "https://github.com/mbrubeck/unicode-reverse"
 documentation = "https://docs.rs/unicode-reverse"
+categories = ["text-processing"]
 keywords = ["unicode", "string", "reverse", "graphemes", "no_std"]
-readme = "README.md"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 unicode-segmentation = "1.0"

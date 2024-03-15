@@ -1,5 +1,5 @@
-use quickcheck::quickcheck;
 use super::reverse_grapheme_clusters_in_place;
+use quickcheck::quickcheck;
 use unicode_segmentation::UnicodeSegmentation;
 
 extern crate std;

@@ -106,7 +106,11 @@ pub fn reverse_grapheme_clusters_in_place(s: &mut str) {
         {
             // Invariant: `tail` points to data we have not modified yet, so it is always valid UTF-8.
             let mut tail = &mut v[..];
-            while let Some(len) = str::from_utf8_unchecked(tail).graphemes(true).next().map(str::len) {
+            while let Some(len) = str::from_utf8_unchecked(tail)
+                .graphemes(true)
+                .next()
+                .map(str::len)
+            {
                 let (grapheme, new_tail) = tail.split_at_mut(len);
                 grapheme.reverse();
                 tail = new_tail;
