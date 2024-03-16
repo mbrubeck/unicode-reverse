@@ -14,4 +14,4 @@ edition = "2021"
 unicode-segmentation = "1.0"
 
 [dev-dependencies]
-quickcheck = "0.4"
+quickcheck = "1.0"
