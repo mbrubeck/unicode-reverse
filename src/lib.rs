@@ -112,8 +112,8 @@ pub fn reverse_grapheme_clusters_in_place(s: &mut str) {
                 .map(str::len)
             {
                 let (grapheme, new_tail) = tail.split_at_mut(len);
-                grapheme.reverse();
                 tail = new_tail;
+                grapheme.reverse();
             }
         }
 
